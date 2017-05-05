@@ -1,10 +1,15 @@
 (function(global) {
   'use strict';
-  // Quick console polyfill
+  /**
+   * Quick console polyfill
+   */
   if (!global.console) global.console = {};
   var con = global.console;
   if (typeof con['log'] !== 'function') con['log'] = function () {};
 
+  /**
+   * Predefined colors (Material design hexa codes)
+   */
   var colors = {
     red: '#f44336',
     pink: '#e91e63',
@@ -34,8 +39,17 @@
 
   var scopes = {};
 
+  /**
+   * Set it at true if you use a dark theme
+   */
   con.theme_dark = false;
 
+  /**
+   * Define one scope
+   * @param scope <string> A scope name
+   * @param color <string> An hexa color or a predefined color to define the text color
+   * @param css <string> Additional CSS
+   */
   con.defineScope = function (scope, color, css) {
     color = color || ((con.theme_dark === true) ? '#ffffff' : '#000000');
     css = css || '';
@@ -43,6 +57,10 @@
     scopes[scope] = 'color:' + color + ';' + css;
   };
 
+  /**
+   * Define scopes
+   * @param scope <object> 
+   */
   con.defineScopes = function (scopes) {
     [].forEach.call(scopes, function (values, scope) {
       var color = values.color || undefined;
@@ -51,6 +69,11 @@
     });
   };
 
+  /**
+   * Use scope method
+   * @param scope <string> Scope name
+   * @param ... Any params you want
+   */
   con.scope = function () {
     var args = Array.from(arguments);
     var scope = args[0];
